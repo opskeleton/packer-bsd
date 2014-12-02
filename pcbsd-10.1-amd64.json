@@ -1,0 +1,76 @@
+{
+  "variables": {
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/freebsd/postinstall.sh",
+        "scripts/freebsd/puppet.sh",
+        "scripts/freebsd/cleanup.sh",
+        "scripts/freebsd/vmtools.sh",
+        "scripts/common/minimize.sh"
+      ]
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<tab><enter>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "<down><down><enter><wait>",
+        "vagrant<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<tab><enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<down><down><down><down><enter><wait>",
+        "<down><down><enter>"
+      ],
+      "boot_wait": "45s",
+      "disk_size": 10140,
+      "guest_os_type": "FreeBSD_64",
+      "http_directory": "http",
+      "iso_checksum": "5f987d9f4efbd1123a4465e41760cccb8b8c942581a7b927cc9ffc1ad77a6a1f",
+      "iso_checksum_type": "sha256",
+      "iso_url": "http://download.pcbsd.org/iso/10.1-RELEASE/amd64/TRUEOS10.1-RELEASE-11-14-2014-x64-DVD-USB.iso",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'shutdown -p now' > shutdown.sh; cat 'shutdown.sh' | su -",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "packer-pcbsd-10.1-amd64",
+      "output_directory": "packer-pcbsd-10.1-amd64-virtualbox",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+	"output": "freebsd-10_puppet-3.6.2.box",
+      "type": "vagrant"
+    }
+  ]
+}
