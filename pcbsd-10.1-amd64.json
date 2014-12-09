@@ -5,12 +5,13 @@
     {
       "type": "shell",
       "scripts": [
-        "scripts/freebsd/postinstall.sh",
-        "scripts/freebsd/puppet.sh",
-        "scripts/freebsd/cleanup.sh",
-        "scripts/freebsd/vmtools.sh",
+        "scripts/pcbsd/postinstall.sh",
+        "scripts/pcbsd/puppet.sh",
+        "scripts/pcbsd/cleanup.sh",
+        "scripts/pcbsd/vmtools.sh",
         "scripts/common/minimize.sh"
-      ]
+      ],
+      "execute_command": "export {{.Vars}} && cat {{.Path}} | su root -m"
     }
   ],
   "builders": [
@@ -29,12 +30,19 @@
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
-        "<down><down><enter><wait>",
+        "<down><down><down><enter><wait>",
         "vagrant<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
         "<tab><enter><wait>",
+        "<down><down><enter><wait>",
+        "<down><down><down><down><down><enter><wait>",
+        "<pageDown><pageDown><pageDown><pageDown><end><enter><wait>",
+        "runCommand=pw user mod vagrant -G wheel <enter><wait>",
+        "runCommand=echo 'auth sufficient pam_group.so trust use_uid\n' | cat - /etc/pam.d/su > /tmp/out && mv /tmp/out /etc/pam.d/su<wait>",
+        "<esc><wait><enter><enter><enter><wait>",  
+        "<down><down><down><down><down><down><enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
         "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
@@ -69,7 +77,7 @@
   ],
   "post-processors": [
     {
-	"output": "freebsd-10_puppet-3.6.2.box",
+	"output": "trueos-10.1_puppet-3.6.2.box",
       "type": "vagrant"
     }
   ]
