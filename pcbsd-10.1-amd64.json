@@ -7,7 +7,6 @@
       "scripts": [
         "scripts/pcbsd/postinstall.sh",
         "scripts/pcbsd/puppet.sh",
-        "scripts/pcbsd/cleanup.sh",
         "scripts/pcbsd/vmtools.sh",
         "scripts/common/minimize.sh"
       ],
@@ -23,7 +22,7 @@
         "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
-        "<tab><enter>",
+        "<tab><enter><wait>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
