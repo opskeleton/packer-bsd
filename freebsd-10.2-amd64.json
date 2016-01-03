@@ -19,14 +19,9 @@
     {
       "type": "virtualbox-iso",
       "boot_command": [
-        "<esc><wait>",
-        "load geom_mbr<wait>",
-        "<enter><wait>",
-        "load zfs<wait>",
-        "<enter><wait>",
-        "boot -s<wait>",
-        "<enter><wait>",
-        "<wait10><wait10>",
+	  "<esc><wait>",
+        "boot -s<enter>",
+        "<wait10><wait5>",
         "/bin/sh<enter><wait>",
         "mdmfs -s 100m md1 /tmp<enter><wait>",
         "mdmfs -s 100m md2 /mnt<enter><wait>",
@@ -37,9 +32,9 @@
       "disk_size": 10140,
       "guest_os_type": "FreeBSD_64",
       "http_directory": "http",
-      "iso_checksum": "9c377b4a4e63443c0b210080694de26133e6a276eddb07c7e00e1c9aebd84109",
+      "iso_checksum": "97908f5cd00d86cafeb2c265bfabbd0aa79f87e9b6b31ecdb756bc96a4a62e93",
       "iso_checksum_type": "sha256",
-      "iso_url": "{{user `mirror`}}/releases/amd64/amd64/ISO-IMAGES/10.0/FreeBSD-10.0-RELEASE-amd64-disc1.iso",
+      "iso_url": "{{user `mirror`}}/releases/amd64/amd64/ISO-IMAGES/10.2/FreeBSD-10.2-RELEASE-amd64-disc1.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -57,7 +52,7 @@
   ],
   "post-processors": [
     {
-	"output": "freebsd-10_puppet-3.6.2.box",
+	"output": "freebsd-10.2_puppet-3.8.2.box",
       "type": "vagrant"
     }
   ]
