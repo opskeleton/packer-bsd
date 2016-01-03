@@ -6,7 +6,7 @@ Building BSD based Vagrant boxes using packer.
 To build freebsd 10.0:
 
 ```bash
-$ packer build --only=virtualbox-iso freebsd-10.0-amd64.json 
+$ packer build --only=virtualbox-iso freebsd-10.2-amd64.json 
 ```
 
 To build trueos 10.1:
