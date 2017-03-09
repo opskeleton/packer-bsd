@@ -1,0 +1,85 @@
+{ "variables": {
+  },
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/pcbsd/postinstall.sh",
+        "scripts/pcbsd/puppet.sh",
+        "scripts/pcbsd/vmtools.sh",
+        "scripts/common/minimize.sh"
+      ],
+      "execute_command": "export {{.Vars}} && cat {{.Path}} | su root -m"
+    }
+  ],
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+	  "<down><down><down><down><down><enter><wait>",
+	  "<down><spacebar><wait><enter><wait>",
+	  "<enter><wait>",
+	  "<enter><wait>",
+	  "<enter><wait>",
+	  "<enter><wait>",
+	  "<tab><wait5><enter>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+        "vagrant<enter><wait>",
+	  "<down><down><enter><wait>",
+	  "vagrant<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<down><down><enter><wait>",
+        "<down><down><down><down><down><enter><wait>",
+        "<pageDown><pageDown><pageDown><pageDown><end><enter><wait>",
+        "runCommand=/usr/sbin/pkg install -y bash<enter><wait>",
+	  "runCommand=/sbin/rc-udpate add sshd<enter><wait>",
+	  "runCommand=pw user mod vagrant -G wheel <enter><wait>",
+        "runCommand=echo 'auth sufficient pam_group.so trust use_uid\n' | cat - /etc/pam.d/su > /tmp/out && mv /tmp/out /etc/pam.d/su<wait10>",
+        "<esc><wait><enter><enter><enter><wait>",
+        "<down><down><down><down><down><down><enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+	  "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+	  "<wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+	  "<enter><wait>",
+        "<down><down><down><down><enter><wait>",
+	  "<down><down><down><down><down><down><down><down><enter><wait>"
+      ],
+      "boot_wait": "45s",
+      "disk_size": 10140,
+      "guest_os_type": "FreeBSD_64",
+      "http_directory": "http",
+      "iso_checksum": "cef36e731bd8ed4d11a0fc77ed21a2975d482fa4586874c146127853a915b047",
+      "iso_checksum_type": "sha256",
+      "iso_url": "TrueOS-Desktop-2017-02-22-x64-DVD.iso",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'shutdown -p now' > shutdown.sh; cat 'shutdown.sh' | su -",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "trueos-11-amd64",
+      "output_directory": "trueos-11-amd64-virtualbox",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+	"output": "trueos-10.1_puppet-3.6.2.box",
+      "type": "vagrant"
+    }
+  ]
+}
